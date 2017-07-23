@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Test Results Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/index.css">
+  <link rel="stylesheet" type="text/css" href="/css/upload.css">
+  <link rel="stylesheet" type="text/css" href="/css/settings.css">
+</head>
+
+<body>
+  <div id="header">
+    <div class="logo">
+      <a href="#">Test Results<span> Dashboard</span></a>
+    </div>
+  </div>
+
+  <a class="mobile">MENU</a>
+
+  <div id="container">
+    <div class="sidebar">
+      <ul id="nav">
+        <li><a id='reports-nav' class="selected" href="#reports" onclick="switchViewToReports(this)">Reports</a></li>
+        <li><a onclick="openUploadModal()">Upload</a></li>
+        <li><a id='settings-nav' class="" href="#settings" onclick="switchViewToSettings(this)">Settings</a></li>
+      </ul>
+    </div>
+
+    <!-- Start of Reporting display -->
+    <div class="content">
+      <div id="content-reports" style="visibility: ''">
+        <h1>Reports</h1>
+        <div id="box">
+          <div class="box-panel" id="table-content"></div>
+        </div>
+      </div>
+
+      <div id="content-settings" style="visibility: hidden;">
+        <h1>Settings</h1>
+        <div id="box">
+          <!-- <div class="box-panel" id="settings-content"> -->
+          <button class="accordion"><b>Report Settings</b></button>
+          <div class="panel">
+            <form id="report-settings" class="animate" action="/settings/report" enctype="application/x-www-form-urlencoded" method="post">
+            <label><b>Report Name:</b></label>
+            <input type="text" name="name" id="name" placeholder="Enter Name for Report. Eg: Junit, TestNG" required>
+            <label for="name"><b>Pass XPath:</b></label>
+            <input type="text" name="passXpath" id="passXpath" placeholder="Enter XPath of Passed Count. Eg://div[1]/div[@id='pass']" required>
+            <label for="name"><b>Fail XPath:</b></label>
+            <input type="text" name="failXpath" id="failXpath" placeholder="Enter XPath of Failed Count. Eg://div[1]/div[@id='fail']"required>
+            <label for="name"><b>Skipped XPath:</b></label>
+            <input type="text" name="skippedXpath" id="skippedXpath" placeholder="Enter XPath of Skipped Count. Eg://div[1]/div[@id='skipped']">
+            <label for="name"><b>Summary File:</b></label>
+            <input type="text" name="summaryFile" id="summaryFile" placeholder="Enter file location of Summary HTML file relative to zipped artifact. Eg: /report/html/summary.html" required>
+            <label for="name"><b>Index File:</b></label>
+            <input type="text" name="indexFile" id="indexFile" placeholder="Enter file location of Index HTML file relative to zipped artifact Eg: /report/html/index.html" required>
+            <button type="submit" value="Submit" id="report-settings-submit">Submit</button>
+            <label id="report-settings-success" style="visibility: hidden;"><b>Settings Successfully Processed</b></label>
+            <br>
+            </form>
+          </div>
+          
+          <form id="release-settings" class="animate" action="/settings/project" enctype="application/x-www-form-urlencoded" method="post">
+          <button class="accordion"><b>Add Release</b></button>
+           <div class="panel">
+            <label><b>Release Name:</b></label>
+            <input type="text" name="name" id="name" placeholder="Enter Name for Release" required>
+            <button type="submit" value="Submit" id="release-settings-submit">Submit</button>
+            <label id="release-settings-success" style="visibility: hidden;"><b>Settings Successfully Processed</b></label>
+            <br>
+            </form>
+          </div>
+
+          <form id="project-settings" class="animate" action="/settings/project" enctype="application/x-www-form-urlencoded" method="post">
+           <button class="accordion"><b>Add Project</b></button>
+           <div class="panel">
+            <label><b>Release Name:</b></label>
+            <select type="text" name="release" id="project-release-dpdwn" required></select>
+            <label><b>Project Name:</b></label>
+            <input type="text" name="name" id="name" placeholder="Enter Name for Project" required>
+            <button type="submit" value="Submit" id="project-settings-submit">Submit</button>
+            <label id="project-settings-success" style="visibility: hidden;"><b>Settings Successfully Processed</b></label>
+            <br>
+            </form>
+          </div>
+          
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <!-- End of Reporting display -->
+
+
+  <!-- Start of Upload Form Modal -->
+  <div id="id01" class="modal">
+
+    <form id="upload-form" class="modal-content animate" action="/upload" enctype="multipart/form-data" method="post">
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <img src="/images/c67c7aa9-ff8b-4975-a37d-9885a2efc00b.png" alt="Avatar" class="avatar">
+      </div>
+
+      <div class="container">
+        <label><b>Release Name: </b></label>
+        <select type="text" name="release" id="release-release-dpdwn-modal" required></select>
+
+        <label><b>Project Name: </b></label>
+        <select type="text" name="project" id="project-release-dpdwn-modal" required></select>
+
+        <label><b>Result Run Date: </b></label>
+        <input id="date" name="date" type="date" script="$(document).ready(function() {
+    var date = Date(); $("#date").attr("placeholder ",date);
+});"/>
+
+        <label><b>Test Report Zipped: </b></label>
+        <input id="fileupload" name="zipped-report" type="file" />
+        <button type="submit" value="submit" id="upload-submit">Upload</button>
+        <label id="upload-success" style="visibility: hidden;"><b>Upload Successfully Processed</b></label>
+      </div>
+    </form>
+  </div>
+  <!-- End of Upload Form Modal -->
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,400italic,600italic,700' rel='stylesheet'
+    type='text/css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+  <script src="/script/app.js"></script>
+</body>
+
+</html>
