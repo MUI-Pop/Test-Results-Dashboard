@@ -15,11 +15,11 @@ NodeJS + MySQL
 3. Update the 'config.js' with database hostname, password, and databae name,
 4. Install all dependancies required for the Node JS runtime using the command,
 `````
-             npm install
+npm install
 `````
 5. Run the command
 ````
-            node app.js
+node app.js
 ````
 6. Dashboard should be accessible on Port 8080 !!!!
 
