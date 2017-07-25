@@ -9,7 +9,7 @@ $.get("/reports", function (data) {
     let header = table.appendChild(document.createElement("thead"));
     let headerRow = header.appendChild(document.createElement("tr"));
 
-    let headerValues = ['Date', 'Pass Count', 'Fail Count', 'Skipped Count', 'Report']
+    let headerValues = ['Release', 'Project', 'Date', 'Pass Count', 'Fail Count', 'Skipped Count', 'Report']
     headerValues.forEach((value) => {
         let th = document.createElement('th');
         let text_node = document.createTextNode(value.toUpperCase());
@@ -33,6 +33,10 @@ $.get("/reports", function (data) {
                 linkNode.appendChild(text_node);
                 td.appendChild(linkNode);
             } else {
+                if (key === 'date') {
+                    cellText = new Date(cellText).toLocaleString();
+                }
+                if(cellText === null) cellText = '';
                 let text_node = document.createTextNode(cellText);
                 td.appendChild(text_node);
             }
@@ -42,7 +46,9 @@ $.get("/reports", function (data) {
     }
 
     document.getElementById('table-content').appendChild(table);
-    $('#result-table').DataTable();
+    $('#result-table').DataTable(
+        { tag: 'input', className: 'table-button'}
+    );
 }, "json");
 
 //----------------------------------------------
@@ -52,23 +58,31 @@ function openUploadModal() {
     document.getElementById('id01').style.display = 'block';
 
     //Load Release options
-    let options = '<option value="" disabled selected>Select your the Project</option>';
+    let release_options = '<option value="" disabled selected>Select the Project</option>';
     $.get('/settings/release', function (data, status) {
         for (var i = 0; i < data.length; i++) {
-            options += '<option value="' + data[i].name + '" id="' + data[i].id + '">' + data[i].name + '</option>';
+            release_options += '<option value="' + data[i].name + '" id="' + data[i].id + '">' + data[i].name + '</option>';
         }
-        $("#release-release-dpdwn-modal").html(options);
+        $("#release-release-dpdwn-modal").html(release_options);
+    })
+
+    let report_type_options = '<option value="" disabled selected>Select the Report Type</option>';
+    $.get('/settings/report', function (data, status) {
+        for (var i = 0; i < data.length; i++) {
+            report_type_options += '<option value="' + data[i].name + '" id="' + data[i].id + '">' + data[i].name + '</option>';
+        }
+        $("#report-type-dpdwn-modal").html(report_type_options);
     })
 }
 
 $("#release-release-dpdwn-modal").change(() => {
     let releaseId = $("#release-release-dpdwn-modal").find(":selected").attr('id')
     let options = '<option value="" disabled selected>Select the Project</option>';
-    
+
     $.get('/settings/project', (data, status) => {
         let result = data;
         for (var i = 0; i < result.length; i++) {
-            if( result[i].release_id == releaseId ){
+            if (result[i].release_id == releaseId) {
                 console.log(result[i].release_id)
                 options += '<option value="' + result[i].name + '">' + result[i].name + '</option>';
             }
@@ -100,10 +114,14 @@ $("#upload-form").submit(function (e) {
         contentType: false,
         processData: false,
         success: (data) => {
-            if (JSON.parse(data).success === true) {
-                $('#upload-submit').css('visibility', 'hidden');
+            if (data.success === true) {
+                //$('#upload-submit').css('visibility', 'hidden');
                 $('#upload-success').css('visibility', '');
-                this.reset();
+                $('#upload-failure').css('visibility', 'hidden');
+                setTimeout(() => {this.reset(); $('#upload-success').css('visibility', 'hidden');}, 3000);
+            } else {
+                console.log(data);
+                $('#upload-failure').css('visibility', '');
             }
         }
     });
@@ -177,9 +195,12 @@ $("#report-settings").submit(function (e) {
         success: (data) => {
             if (data.success === true) {
                 console.log(data);
-                $('#report-settings-submit').css({ 'visibility': 'hidden', 'display': 'none' });
+                //$('#report-settings-submit').css({ 'visibility': 'hidden', 'display': 'none' });
                 $('#report-settings-success').css('visibility', '');
-                this.reset();
+                $('#report-settings-failure').css('visibility', 'hidden');                
+                setTimeout(() => {this.reset(); $('#report-settings-success').css('visibility', 'hidden');}, 3000);
+            } else {
+                $('#report-settings-failure').css('visibility', '');
             }
         }
     });
@@ -203,9 +224,12 @@ $("#project-settings").submit(function (e) {
         success: (data) => {
             if (data.success === true) {
                 console.log(data);
-                $('#project-settings-submit').css({ 'visibility': 'hidden', 'display': 'none' });
+                //$('#project-settings-submit').css({ 'visibility': 'hidden', 'display': 'none' });
                 $('#project-settings-success').css('visibility', '');
-                this.reset();
+                $('#project-settings-failure').css('visibility', 'hidden');
+                setTimeout(() => {this.reset(); $('#project-settings-success').css('visibility', 'hidden');}, 3000);
+            }else {
+                $('#project-settings-failure').css('visibility', '');
             }
         }
     });
@@ -229,9 +253,12 @@ $("#release-settings").submit(function (e) {
         success: (data) => {
             if (data.success === true) {
                 console.log(data);
-                $('#release-settings-submit').css({ 'visibility': 'hidden', 'display': 'none' });
+                //$('#release-settings-submit').css({ 'visibility': 'hidden', 'display': 'none' });
                 $('#release-settings-success').css('visibility', '');
-                this.reset();
+                $('#release-settings-failure').css('visibility', 'hidden');
+                setTimeout(() => {this.reset(); $('#release-settings-success').css('visibility', 'hidden');}, 3000);
+            } else {
+                $('#release-settings-failure').css('visibility', '');
             }
         }
     });

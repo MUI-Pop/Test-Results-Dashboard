@@ -1,5 +1,5 @@
 /* Full-width input fields */
-input[type=text], input[type=text], input[type=date], input[type=file], select[id=release-release-dpdwn], select[id=project-release-dpdwn], select[id=release-release-dpdwn-modal], select[id=project-release-dpdwn-modal]{
+input[type=text], input[type=text], input[type=datetime-local], input[type=file], select[id=release-release-dpdwn], select[id=project-release-dpdwn], select[id=release-release-dpdwn-modal], select[id=project-release-dpdwn-modal], select[id=report-type-dpdwn-modal]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

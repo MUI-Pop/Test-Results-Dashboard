@@ -58,6 +58,7 @@
             <input type="text" name="indexFile" id="indexFile" placeholder="Enter file location of Index HTML file relative to zipped artifact Eg: /report/html/index.html" required>
             <button type="submit" value="Submit" id="report-settings-submit">Submit</button>
             <label id="report-settings-success" style="visibility: hidden;"><b>Settings Successfully Processed</b></label>
+            <label id="report-settings-failure" style="visibility: hidden; color: red"><b>Problem Processing Settings</b></label>
             <br>
             </form>
           </div>
@@ -69,6 +70,7 @@
             <input type="text" name="name" id="name" placeholder="Enter Name for Release" required>
             <button type="submit" value="Submit" id="release-settings-submit">Submit</button>
             <label id="release-settings-success" style="visibility: hidden;"><b>Settings Successfully Processed</b></label>
+            <label id="release-settings-failure" style="visibility: hidden; color: red"><b>Problem Processing Settings</b></label>
             <br>
             </form>
           </div>
@@ -82,6 +84,7 @@
             <input type="text" name="name" id="name" placeholder="Enter Name for Project" required>
             <button type="submit" value="Submit" id="project-settings-submit">Submit</button>
             <label id="project-settings-success" style="visibility: hidden;"><b>Settings Successfully Processed</b></label>
+            <label id="project-settings-failure" style="visibility: hidden; color: red"><b>Problem Processing Settings</b></label>
             <br>
             </form>
           </div>
@@ -111,8 +114,11 @@
         <label><b>Project Name: </b></label>
         <select type="text" name="project" id="project-release-dpdwn-modal" required></select>
 
+        <label><b>Report Format: </b></label>
+        <select type="text" name="report_type" id="report-type-dpdwn-modal" required></select>
+
         <label><b>Result Run Date: </b></label>
-        <input id="date" name="date" type="date" script="$(document).ready(function() {
+        <input id="date" name="date" type="datetime-local" step=1 script="$(document).ready(function() {
     var date = Date(); $("#date").attr("placeholder ",date);
 });"/>
 
@@ -120,6 +126,7 @@
         <input id="fileupload" name="zipped-report" type="file" />
         <button type="submit" value="submit" id="upload-submit">Upload</button>
         <label id="upload-success" style="visibility: hidden;"><b>Upload Successfully Processed</b></label>
+        <label id="upload-failure" style="visibility: hidden; color: red"><b>Problem Processing Upload</b></label>
       </div>
     </form>
   </div>
@@ -128,7 +135,7 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,400italic,600italic,700' rel='stylesheet'
     type='text/css'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+   <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css"> 
   <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
   <script src="/script/app.js"></script>
 </body>

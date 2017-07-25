@@ -2,11 +2,11 @@ let express = require('express');
 let router = express.Router();
 let formidable = require('formidable');
 
-let Report = require('../lib/report');
-let Report_Settings = require('../lib/settings/report');
-let Project_Settings = require('../lib/settings/project');
-let Release_Settings = require('../lib/settings/release');
-let processReportUpload = require('../lib/processReportUpload');
+let Report = require('../src/report');
+let Report_Settings = require('../src/settings/report');
+let Project_Settings = require('../src/settings/project');
+let Release_Settings = require('../src/settings/release');
+let processReportUpload = require('../src/processReportUpload');
 
 //Reports
 router.get('/reports/', function (request, response) {
@@ -38,7 +38,7 @@ router.post('/report', function (request, response) {
             response.send({ success: false });
             return;
         }
-        response.send(JSON.stringify({ success: true }));
+        response.send({ success: true });
     });
 });
 

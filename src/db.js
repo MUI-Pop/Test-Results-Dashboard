@@ -113,7 +113,6 @@ Find queried data from database
 */
 function find(table, sqlObject, callback) {
     let query = connection.query(SELECT_QUERY_TEMPLATE, [table, sqlObject], (error, results, fields) => {
-        console.log(query.sql)
         if (error) {
             callback(error);
             return;
@@ -136,7 +135,6 @@ function findAll(table, callback) {
 
 function deleteRow(table, sqlObject, callback) {
     let query = connection.query(DELETE_QUERY_TEMPLATE, [table, sqlObject], (error, results, fields) => {
-        console.log(query.sql)
         if (error) {
             callback(error);
             return;

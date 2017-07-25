@@ -5,7 +5,7 @@ let express = require('express')
 let app = express();
 
 //Custom modules
-let db = require('./lib/db');
+let db = require('./src/db');
 const config = require('./config')
 
 //routes
