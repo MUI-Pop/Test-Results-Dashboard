@@ -71,7 +71,7 @@ Report.prototype.create = function (callback) {
     };
 
     Report.prototype.findAll = function (callback) {
-        db.connection.query('SELECT reports.id, release_table.name AS `Release`, project_table.name AS Project, reports.date, reports.passcount, reports.failcount, reports.skippedcount, reports.reportpath FROM reports, project_table, release_table WHERE reports.project_id = project_table.id AND project_table.release_id = release_table.id;', (err, results, fields) => {
+        db.query('SELECT reports.id, release_table.name AS `Release`, project_table.name AS Project, reports.date, reports.passcount, reports.failcount, reports.skippedcount, reports.reportpath FROM reports, project_table, release_table WHERE reports.project_id = project_table.id AND project_table.release_id = release_table.id;', (err, results, fields) => {
             if (err) {
                 callback(err);
                 return;

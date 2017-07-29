@@ -74,7 +74,7 @@ Project.prototype.findByNameAndReleaseID = function (callback) {
     delete this._id;
     delete this.release;
     let query = {name: this.name, release_id: this.release_id };
-    db.connection.query(`SELECT * FROM project_table WHERE name = '${this.name}' AND release_id = '${this.release_id}'`, (err, results, fields) => {
+    db.query(`SELECT * FROM project_table WHERE name = '${this.name}' AND release_id = '${this.release_id}'`, (err, results, fields) => {
         if (err) {
             callback(err);
             return;
